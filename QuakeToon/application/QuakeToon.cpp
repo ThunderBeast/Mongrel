@@ -9,6 +9,9 @@
 #include "ScriptFile.h"
 #include "QuakeToon.h"
 
+//fixme
+#include <SDL.h>
+
 #ifdef ENABLE_LUA
 #include "LuaScript.h"
 #endif
@@ -90,9 +93,20 @@ void QuakeToon::Start()
 
     Qcommon_Init(0, NULL);
 
+    // run at 60hz
+    float last_ticks = (float) SDL_GetTicks();
     while(1)
     {
-        Qcommon_Frame(.1f);
+        float current_ticks = (float) SDL_GetTicks();
+
+        while(current_ticks - last_ticks < 16)
+        {
+            current_ticks = (float) SDL_GetTicks();
+        }
+
+        Qcommon_Frame(16);
+
+        last_ticks = (float) SDL_GetTicks();
     }
 #ifdef ENABLE_LUA
     String extension = GetExtension(scriptFileName_).ToLower();
