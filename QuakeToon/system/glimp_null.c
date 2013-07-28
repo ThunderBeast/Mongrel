@@ -22,6 +22,8 @@
 // satisfy linker
 refexport_t GetRefAPI(refimport_t rimp)
 {
+	static refexport_t v;
+	return v;
 }
 
 
@@ -37,6 +39,7 @@ void GLimp_EndFrame(void)
 
 int GLimp_Init(void *hinstance, void *hWnd)
 {
+	return 0;
 }
 
 
@@ -47,6 +50,7 @@ void GLimp_Shutdown(void)
 
 int GLimp_SetMode(int *pwidth, int *pheight, int mode, qboolean fullscreen)
 {
+	return 0;
 }
 
 

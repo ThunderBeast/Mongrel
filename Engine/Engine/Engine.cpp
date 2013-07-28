@@ -568,6 +568,11 @@ void Engine::ApplyFrameLimit()
 VariantMap Engine::ParseParameters(const Vector<String>& arguments)
 {
     VariantMap ret;
+
+    //Mongrel, might be a better place to default these?
+    ret["FullScreen"] = false;
+    ret["WindowWidth"] = 1280;
+    ret["WindowHeight"] = 720;
     
     for (unsigned i = 0; i < arguments.Size(); ++i)
     {
