@@ -22,11 +22,20 @@
 
 #include "../client/client.h"
 
+ // Console variables that we need to access from this module
+cvar_t      *vid_gamma;
+cvar_t      *vid_ref;           // Name of Refresh DLL loaded
+cvar_t      *vid_xpos;          // X coordinate of window position
+cvar_t      *vid_ypos;          // Y coordinate of window position
+cvar_t      *vid_fullscreen;
+
 viddef_t viddef;                                // global video state
 
 refexport_t re;
 
-refexport_t GetRefAPI(refimport_t rimp);
+static qboolean reflib_active = 0;
+
+extern refexport_t GetRefAPI(refimport_t rimp);
 
 /*
  * ==========================================================================
@@ -119,39 +128,16 @@ qboolean VID_GetModeInfo(int *width, int *height, int mode)
 
 void VID_Init(void)
 {
-    refimport_t ri;
+    /* Create the video variables so we know how to start the graphics drivers */
+    vid_ref = Cvar_Get ("vid_ref", "opengl", CVAR_ARCHIVE);
+    vid_xpos = Cvar_Get ("vid_xpos", "3", CVAR_ARCHIVE);
+    vid_ypos = Cvar_Get ("vid_ypos", "22", CVAR_ARCHIVE);
+    vid_fullscreen = Cvar_Get ("vid_fullscreen", "0", CVAR_ARCHIVE);
+    vid_gamma = Cvar_Get( "vid_gamma", "1", CVAR_ARCHIVE );
+        
+    /* Start the graphics mode and load refresh DLL */
+    VID_CheckChanges();
 
-    viddef.width  = 320;
-    viddef.height = 240;
-
-    ri.Cmd_AddCommand    = Cmd_AddCommand;
-    ri.Cmd_RemoveCommand = Cmd_RemoveCommand;
-    ri.Cmd_Argc          = Cmd_Argc;
-    ri.Cmd_Argv          = Cmd_Argv;
-    ri.Cmd_ExecuteText   = Cbuf_ExecuteText;
-    ri.Con_Printf        = VID_Printf;
-    ri.Sys_Error         = VID_Error;
-    ri.FS_LoadFile       = FS_LoadFile;
-    ri.FS_FreeFile       = FS_FreeFile;
-    ri.FS_Gamedir        = FS_Gamedir;
-    ri.Vid_NewWindow     = VID_NewWindow;
-    ri.Cvar_Get          = Cvar_Get;
-    ri.Cvar_Set          = Cvar_Set;
-    ri.Cvar_SetValue     = Cvar_SetValue;
-    ri.Vid_GetModeInfo   = VID_GetModeInfo;
-
-    re = GetRefAPI(ri);
-
-    if (re.api_version != API_VERSION)
-    {
-        Com_Error(ERR_FATAL, "Re has incompatible api_version");
-    }
-
-    // call the init function
-    if (re.Init(NULL, NULL) == -1)
-    {
-        Com_Error(ERR_FATAL, "Couldn't start refresh");
-    }
 }
 
 
@@ -163,9 +149,110 @@ void VID_Shutdown(void)
     }
 }
 
-
-void VID_CheckChanges(void)
+/*
+==============
+VID_LoadRefresh
+==============
+*/
+qboolean VID_LoadRefresh( char *name )
 {
+    refimport_t ri;
+    
+    if ( reflib_active )
+    {
+        re.Shutdown();
+    }
+
+    Com_Printf( "------- Loading %s -------\n", name );
+
+    ri.Cmd_AddCommand = Cmd_AddCommand;
+    ri.Cmd_RemoveCommand = Cmd_RemoveCommand;
+    ri.Cmd_Argc = Cmd_Argc;
+    ri.Cmd_Argv = Cmd_Argv;
+    ri.Cmd_ExecuteText = Cbuf_ExecuteText;
+    ri.Con_Printf = VID_Printf;
+    ri.Sys_Error = VID_Error;
+    ri.FS_LoadFile = FS_LoadFile;
+    ri.FS_FreeFile = FS_FreeFile;
+    ri.FS_Gamedir = FS_Gamedir;
+    ri.Cvar_Get = Cvar_Get;
+    ri.Cvar_Set = Cvar_Set;
+    ri.Cvar_SetValue = Cvar_SetValue;
+    ri.Vid_GetModeInfo = VID_GetModeInfo;
+    ri.Vid_MenuInit = VID_MenuInit;
+    ri.Vid_NewWindow = VID_NewWindow;
+
+    re = GetRefAPI( ri );
+
+    if (re.api_version != API_VERSION)
+    {
+        Com_Error (ERR_FATAL, "%s has incompatible api_version", name);
+    }
+
+    if ( re.Init( NULL, NULL ) == -1 )
+    {
+        re.Shutdown();
+        return false;
+    }
+
+    Com_Printf( "------------------------------------\n");
+    reflib_active = true;
+
+//======
+//PGM
+    vidref_val = VIDREF_OTHER;
+    if(vid_ref)
+    {
+        if(!strcmp (vid_ref->string, "gl"))
+            vidref_val = VIDREF_GL;
+        else if(!strcmp(vid_ref->string, "soft"))
+            vidref_val = VIDREF_SOFT;
+    }
+//PGM
+//======
+
+    return true;
+}
+
+
+
+void VID_CheckChanges (void)
+{
+    char name[100];
+
+    if ( vid_ref->modified )
+    {
+        cl.force_refdef = true;     // can't use a paused refdef
+        S_StopAllSounds();
+    }
+    while (vid_ref->modified)
+    {
+        /*
+        ** refresh has changed
+        */
+        vid_ref->modified = false;
+        vid_fullscreen->modified = true;
+        cl.refresh_prepped = false;
+        cls.disable_screen = true;
+
+        Com_sprintf( name, sizeof(name), "ref_%s.dll", vid_ref->string );
+        if ( !VID_LoadRefresh( name ) )
+        {
+            if ( strcmp (vid_ref->string, "soft") == 0 )
+                Com_Error (ERR_FATAL, "Couldn't fall back to software refresh!");
+            Cvar_Set( "vid_ref", "soft" );
+
+            /*
+            ** drop the console if we fail to load a refresh
+            */
+            if ( cls.key_dest != key_console )
+            {
+                Con_ToggleConsole_f();
+            }
+        }
+        cls.disable_screen = false;
+    }
+
 }
 
 

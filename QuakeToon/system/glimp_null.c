@@ -31,7 +31,7 @@ void GLimp_EndFrame(void)
 
 int GLimp_Init(void *hinstance, void *hWnd)
 {
-	return 0;
+	return 1;
 }
 
 
@@ -42,7 +42,7 @@ void GLimp_Shutdown(void)
 
 int GLimp_SetMode(int *pwidth, int *pheight, int mode, qboolean fullscreen)
 {
-	return 0;
+	return rserr_ok;
 }
 
 

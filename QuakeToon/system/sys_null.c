@@ -22,10 +22,21 @@
 #include "../qcommon/qcommon.h"
 #include "errno.h"
 
+ #include <SDL.h>
+ extern void *GetGameAPI(void *import);
+
 int curtime;
 
 unsigned sys_frame_time;
 
+// fix this
+char *strlwr (char *s)
+{
+    while (*s) {
+        *s = tolower(*s);
+        s++;
+    }
+}
 
 void Sys_mkdir(char *path)
 {
@@ -41,6 +52,8 @@ void Sys_Error(char *error, ...)
     vprintf(error, argptr);
     va_end(argptr);
     printf("\n");
+
+    abort();
 
     exit(1);
 }
@@ -59,7 +72,7 @@ void Sys_UnloadGame(void)
 
 void *Sys_GetGameAPI(void *parms)
 {
-    return NULL;
+    return GetGameAPI (parms);
 }
 
 
@@ -71,6 +84,7 @@ char *Sys_ConsoleInput(void)
 
 void Sys_ConsoleOutput(char *string)
 {
+    printf("QuakeToon: %s\n", string);    
 }
 
 
@@ -97,7 +111,7 @@ char *Sys_GetClipboardData(void)
 
 int Sys_Milliseconds(void)
 {
-    return 0;
+    return (int) SDL_GetTicks();
 }
 
 

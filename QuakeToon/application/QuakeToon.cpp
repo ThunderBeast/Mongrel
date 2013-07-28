@@ -15,6 +15,13 @@
 
 #include "DebugNew.h"
 
+extern "C"
+{
+void Qcommon_Init(int argc, char **argv);
+void Qcommon_Frame(int msec);
+void Qcommon_Shutdown(void);    
+};
+
 DEFINE_APPLICATION_MAIN(::Urho3D::QuakeToon);
 
 namespace Urho3D
@@ -80,6 +87,13 @@ void QuakeToon::Setup()
 
 void QuakeToon::Start()
 {
+
+    Qcommon_Init(0, NULL);
+
+    while(1)
+    {
+        Qcommon_Frame(.1f);
+    }
 #ifdef ENABLE_LUA
     String extension = GetExtension(scriptFileName_).ToLower();
     if (extension != ".lua")

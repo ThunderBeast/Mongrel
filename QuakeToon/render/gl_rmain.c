@@ -135,6 +135,7 @@ cvar_t *vid_ref;
 
 qboolean QGL_Init(const char *dllname)
 {
+    return true;
 
 }
 
@@ -1261,10 +1262,10 @@ int R_Init(void *hinstance, void *hWnd)
     ri.Con_Printf(PRINT_ALL, "GL_EXTENSIONS: %s\n", gl_config.extensions_string);
 
     strcpy(renderer_buffer, gl_config.renderer_string);
-    Q_strlwr(renderer_buffer);
+    strlwr(renderer_buffer);
 
     strcpy(vendor_buffer, gl_config.vendor_string);
-    Q_strlwr(vendor_buffer);
+    strlwr(vendor_buffer);
 
     gl_config.renderer = GL_RENDERER_OTHER;
 
@@ -1430,13 +1431,6 @@ int R_Init(void *hinstance, void *hWnd)
 
     GL_SetDefaultState();
 
-    /*
-    ** draw our stereo patterns
-    */
-#if 0 // commented out until H3D pays us the money they owe us
-    GL_DrawStereoPattern();
-#endif
-
     GL_InitImages();
     Mod_Init();
     R_InitParticleTexture();
@@ -1447,6 +1441,8 @@ int R_Init(void *hinstance, void *hWnd)
     //{
         //ri.Con_Printf(PRINT_ALL, "glGetError() = 0x%x\n", err);
     //}
+
+    return 1;
 }
 
 
