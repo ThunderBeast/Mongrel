@@ -318,6 +318,9 @@ if (NOT ENABLE_TOOLS)
     endif ()
 endif ()
 
+#disable tools for now
+set (ENABLE_TOOLS 0)
+
 if (NOT IOS AND NOT ANDROID)
     if (ENABLE_LUA)
         add_subdirectory (ThirdParty/tolua++/src/bin)
@@ -357,3 +360,4 @@ if (ENABLE_EXTRAS AND NOT IOS AND NOT ANDROID)
 endif ()
 
 add_subdirectory (Urho3D)
+add_subdirectory (QuakeToon)
