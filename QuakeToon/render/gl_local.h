@@ -36,8 +36,6 @@
 
 #include "../client/ref.h"
 
-#include "qgl.h"
-
 #define REF_VERSION    "GL 0.01"
 
 // up / down
@@ -457,3 +455,7 @@ int GLimp_SetMode(int *pwidth, int *pheight, int mode, qboolean fullscreen);
 void GLimp_AppActivate(qboolean active);
 void GLimp_EnableLogging(qboolean enable);
 void GLimp_LogNewFrame(void);
+
+qboolean QGL_Init(const char *dllname);
+void QGL_Shutdown(void);
+

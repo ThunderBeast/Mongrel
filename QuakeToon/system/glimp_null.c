@@ -19,14 +19,6 @@
  */
 #include "../render/gl_local.h"
 
-// satisfy linker
-refexport_t GetRefAPI(refimport_t rimp)
-{
-	static refexport_t v;
-	return v;
-}
-
-
 void GLimp_BeginFrame(float camera_separation)
 {
 }
