@@ -24,8 +24,8 @@
 
 #include <stdio.h>
 
-#include <GL/gl.h>
-#include <GL/glu.h>
+#include <OpenGL/gl.h>
+#include <OpenGL/glu.h>
 #include <math.h>
 
 #ifndef __linux__

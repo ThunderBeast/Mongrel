@@ -29,7 +29,7 @@
 #  include <windows.h>
 #endif
 
-#include <GL/gl.h>
+#include <OpenGL/gl.h>
 
 #ifdef __linux__
 //#include <GL/fxmesa.h>
@@ -480,5 +480,7 @@ void Fake_glColorTableEXT(GLenum target, GLenum internalformat,
 #define GL_TEXTURE0_ARB                     0x84C0
 #define GL_TEXTURE1_ARB                     0x84C1
 
-extern int GL_TEXTURE0, GL_TEXTURE1;
+//QuakeToon
+//extern int GL_TEXTURE0, GL_TEXTURE1;
+
 #endif

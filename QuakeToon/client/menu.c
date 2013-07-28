@@ -1080,7 +1080,7 @@ void M_Menu_Keys_f(void)
  * =======================================================================
  */
 static cvar_t *win_noalttab;
-extern cvar_t *in_joystick;
+//extern cvar_t *in_joystick;
 
 static menuframework_s s_options_menu;
 static menuaction_s    s_options_defaults_action;
@@ -1108,7 +1108,7 @@ static void CrosshairFunc(void *unused)
 
 static void JoystickFunc(void *unused)
 {
-    Cvar_SetValue("in_joystick", s_options_joystick_box.curvalue);
+    //Cvar_SetValue("in_joystick", s_options_joystick_box.curvalue);
 }
 
 
@@ -1180,8 +1180,8 @@ static void ControlsSetMenuItemValues(void)
     Cvar_SetValue("crosshair", ClampCvar(0, 3, crosshair->value));
     s_options_crosshair_box.curvalue = crosshair->value;
 
-    Cvar_SetValue("in_joystick", ClampCvar(0, 1, in_joystick->value));
-    s_options_joystick_box.curvalue = in_joystick->value;
+    //Cvar_SetValue("in_joystick", ClampCvar(0, 1, in_joystick->value));
+    //s_options_joystick_box.curvalue = in_joystick->value;
 
     s_options_noalttab_box.curvalue = win_noalttab->value;
 }

@@ -14,9 +14,8 @@ file ( GLOB GAME_C_FILES   game/*.c )
 file ( GLOB SYSTEM_C_FILES system/*.c )
 
 #${RENDER_C_FILES}
-#${SYSTEM_C_FILES}
 
-set (SOURCE_FILES ${COMMON_C_FILES} ${CLIENT_C_FILES} ${SERVER_C_FILES} ${GAME_C_FILES} ${APPLICATION_FILES} )
+set (SOURCE_FILES ${COMMON_C_FILES} ${CLIENT_C_FILES} ${SERVER_C_FILES} ${GAME_C_FILES} ${SYSTEM_C_FILES} ${APPLICATION_FILES} )
 
 # Define dependency libs
 set (LIBS ../Engine/Container ../Engine/Core ../Engine/Engine ../Engine/IO ../Engine/Math ../Engine/Resource ../Engine/Script)
