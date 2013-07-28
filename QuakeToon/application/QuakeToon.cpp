@@ -7,7 +7,7 @@
 #include "ResourceEvents.h"
 #include "Script.h"
 #include "ScriptFile.h"
-#include "Urho3D.h"
+#include "QuakeToon.h"
 
 #ifdef ENABLE_LUA
 #include "LuaScript.h"
@@ -95,9 +95,9 @@ void QuakeToon::Start()
         if (scriptFile_ && scriptFile_->Execute("void Start()"))
         {
             // Subscribe to script's reload event to allow live-reload of the application
-            SubscribeToEvent(scriptFile_, E_RELOADSTARTED, HANDLER(Urho3D, HandleScriptReloadStarted));
-            SubscribeToEvent(scriptFile_, E_RELOADFINISHED, HANDLER(Urho3D, HandleScriptReloadFinished));
-            SubscribeToEvent(scriptFile_, E_RELOADFAILED, HANDLER(Urho3D, HandleScriptReloadFailed));
+            SubscribeToEvent(scriptFile_, E_RELOADSTARTED, HANDLER(QuakeToon, HandleScriptReloadStarted));
+            SubscribeToEvent(scriptFile_, E_RELOADFINISHED, HANDLER(QuakeToon, HandleScriptReloadFinished));
+            SubscribeToEvent(scriptFile_, E_RELOADFAILED, HANDLER(QuakeToon, HandleScriptReloadFailed));
             return;
         }
 #ifdef ENABLE_LUA

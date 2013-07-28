@@ -130,32 +130,6 @@ void berserk_walk(edict_t *self)
     self->monsterinfo.currentmove = &berserk_move_walk;
 }
 
-
-/*
- *
- *****************************
- *****************************SKIPPED THIS FOR NOW!
- *****************************
- *****************************
- *****************************Running -> Arm raised in air
- *****************************
- *****************************void()	berserk_runb1	=[	$r_att1 ,	berserk_runb2	] {ai_run(21);};
- *****************************void()	berserk_runb2	=[	$r_att2 ,	berserk_runb3	] {ai_run(11);};
- *****************************void()	berserk_runb3	=[	$r_att3 ,	berserk_runb4	] {ai_run(21);};
- *****************************void()	berserk_runb4	=[	$r_att4 ,	berserk_runb5	] {ai_run(25);};
- *****************************void()	berserk_runb5	=[	$r_att5 ,	berserk_runb6	] {ai_run(18);};
- *****************************void()	berserk_runb6	=[	$r_att6 ,	berserk_runb7	] {ai_run(19);};
- *****************************// running with arm in air : start loop
- *****************************void()	berserk_runb7	=[	$r_att7 ,	berserk_runb8	] {ai_run(21);};
- *****************************void()	berserk_runb8	=[	$r_att8 ,	berserk_runb9	] {ai_run(11);};
- *****************************void()	berserk_runb9	=[	$r_att9 ,	berserk_runb10	] {ai_run(21);};
- *****************************void()	berserk_runb10	=[	$r_att10 ,	berserk_runb11	] {ai_run(25);};
- *****************************void()	berserk_runb11	=[	$r_att11 ,	berserk_runb12	] {ai_run(18);};
- *****************************void()	berserk_runb12	=[	$r_att12 ,	berserk_runb7	] {ai_run(19);};
- *****************************// running with arm in air : end loop
- */
-
-
 mframe_t berserk_frames_run1 [] =
 {
     ai_run, 21, NULL,
