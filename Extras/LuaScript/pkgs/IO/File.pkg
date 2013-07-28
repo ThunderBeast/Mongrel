@@ -1,0 +1,39 @@
+$#include "File.h"
+
+enum FileMode
+{
+    FILE_READ = 0,
+    FILE_WRITE,
+    FILE_READWRITE
+};
+
+class File : public Deserializer
+{
+    File(Context* context);
+    File(Context* context, const String& fileName, FileMode mode = FILE_READ);
+    File(Context* context, PackageFile* package, const String& fileName);
+    virtual ~File();
+    
+    virtual unsigned Read(void* dest, unsigned size);
+    virtual unsigned Seek(unsigned position);
+    virtual unsigned Write(const void* data, unsigned size);
+    virtual const String& GetName() const;
+    virtual unsigned GetChecksum();
+    
+    bool Open(const String& fileName, FileMode mode = FILE_READ);
+    bool Open(PackageFile* package, const String& fileName);
+    void Close();
+    void Flush();
+    void SetName(const String& name);
+    
+    FileMode GetMode() const;
+    bool IsOpen() const;
+    void* GetHandle() const;
+    bool IsPackaged() const;
+    
+    tolua_readonly tolua_property__get_set String& name;
+    tolua_readonly tolua_property__get_set unsigned checksum;
+    tolua_readonly tolua_property__get_set FileMode mode;
+    tolua_readonly tolua_property__is_set bool open;
+    tolua_readonly tolua_property__is_set bool packaged;
+};

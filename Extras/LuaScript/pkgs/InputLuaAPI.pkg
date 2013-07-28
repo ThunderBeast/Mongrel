@@ -1,0 +1,7 @@
+$#define TOLUA_RELEASE
+
+$pfile "Input/Input.pkg"
+$pfile "Input/InputEvents.pkg"
+
+$using namespace Urho3D;
+$#pragma warning(disable:4800)

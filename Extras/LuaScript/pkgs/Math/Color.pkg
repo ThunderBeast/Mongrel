@@ -1,0 +1,36 @@
+$#include "Color.h"
+
+class Color
+{
+    Color();
+    Color(const Color& color);
+    Color(const Color& color, float a);
+    Color(float r, float g, float b);
+    Color(float r, float g, float b, float a);
+    
+    bool operator == (const Color& rhs) const;
+    Color operator * (float rhs) const;
+    Color operator + (const Color& rhs);
+    
+    Vector3 RGBValues() const;
+    float Intensity() const;
+    
+    Color Lerp(const Color& rhs, float t) const;
+    unsigned ToUInt() const;
+    
+    Vector4 ToVector4() const;
+    String ToString() const;
+    
+    float r_ @ r;
+    float g_ @ g;
+    float b_ @ b;
+    float a_ @ a;
+    
+    static const Color WHITE;
+    static const Color YELLOW;
+    static const Color RED;
+    static const Color GREEN;
+    static const Color BLUE;
+    static const Color BLACK;
+    static const Color TRANSPARENT;
+};

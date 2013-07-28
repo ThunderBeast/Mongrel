@@ -1,0 +1,6 @@
+$#include "Texture2D.h"
+
+class Texture2D : public Texture
+{
+    RenderSurface* GetRenderSurface() const;
+};

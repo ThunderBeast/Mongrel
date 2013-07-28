@@ -1,0 +1,5 @@
+$#include "Serializable.h"
+
+class Serializable : public Object
+{
+};

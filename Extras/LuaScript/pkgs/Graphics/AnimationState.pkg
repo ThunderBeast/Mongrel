@@ -1,0 +1,34 @@
+$#include "AnimationState.h"
+
+class AnimationState
+{
+    AnimationState(AnimatedModel* model, Animation* animation);
+    AnimationState(Node* node, Animation* animation);
+    ~AnimationState();
+    
+    void SetStartBone(Bone* bone);
+    void SetLooped(bool looped);
+    void SetWeight(float weight);
+    void SetTime(float time);
+    void AddWeight(float delta);
+    void AddTime(float delta);
+    void SetLayer(unsigned char layer);
+    
+    Animation* GetAnimation() const;
+    Bone* GetStartBone() const;
+    bool IsEnabled() const;
+    bool IsLooped() const;
+    float GetWeight() const;
+    float GetTime() const;
+    float GetLength() const;
+    unsigned char GetLayer() const;
+    
+    tolua_readonly tolua_property__get_set Animation* animation;
+    tolua_property__get_set Bone* startBone;
+    tolua_readonly tolua_property__is_set bool enabled;
+    tolua_property__is_set bool looped;
+    tolua_property__get_set float weight;
+    tolua_property__get_set float time;
+    tolua_readonly tolua_property__get_set float length;
+    tolua_property__get_set unsigned char layer;
+};

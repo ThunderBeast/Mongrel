@@ -1,0 +1,234 @@
+namespace Urho3D
+{
+
+/**
+\mainpage Urho3D - cross-platform rendering and game engine
+
+Urho3D (http://urho3d.googlecode.com) is a lightweight, cross-platform rendering and game engine implemented in C++ and released under the MIT license. It utilizes either Direct3D9 or OpenGL for rendering (%Shader %Model 2 or OpenGL 2.0 required as minimum.)
+
+For getting started, see:
+
+\ref Building "Building Urho3D" <br>
+\ref Running "Running Urho3D" <br>
+\ref Structure "Overall structure" <br>
+\ref Conventions "Conventions" <br>
+\ref ScriptQuickstart "Quickstart in script" <br>
+\ref CppQuickstart "Quickstart in C++" <br>
+\ref EditorInstructions "Editor instructions" <br>
+
+For further reference, see:
+
+\ref Containers "Container types" <br>
+\ref ObjectTypes "Object types and factories" <br>
+\ref Subsystems "Subsystems" <br>
+\ref Events "Events" <br>
+\ref MainLoop "Engine initialization and main loop" <br>
+\ref SceneModel "Scene model" <br>
+\ref Resources "Resources" <br>
+\ref Scripting "Scripting" <br>
+\ref Rendering "Rendering" <br>
+\ref Input "Input" <br>
+\ref Audio "Audio" <br>
+\ref Physics "Physics" <br>
+\ref Navigation "Navigation" <br>
+\ref UI "User interface" <br>
+\ref Serialization "Serialization" <br>
+\ref Network "Networking" <br>
+\ref Multithreading "Multithreading" <br>
+\ref Tools "Tools" <br>
+\ref Unicode "Unicode support" <br>
+\ref FileFormats "Custom file formats" <br>
+\ref CodingConventions "Coding conventions" <br>
+\ref ScriptAPI "Scripting API (generated)" <br>
+
+For credits, copyright and licensing information, see \ref Credits & \ref License.
+
+For release history and major changes, see \ref History.
+
+\page Credits Credits
+
+Urho3D development, contributions and bugfixes by:
+- Lasse &Ouml;&ouml;rni (loorni@gmail.com, AgentC at GameDev.net)
+- Wei Tjong Yao
+- Colin Barrett
+- Erik Beran
+- Carlo Carollo
+- Chris Friesen
+- Alex Fuller
+- Mika Heinonen
+- Aster Jian
+- Jason Kinzer
+- Pete Leigh
+- Paul Noome
+- Vladimir Pobedinsky
+- Miika Santala
+- Firegorilla
+- Magic.Lixin
+- amadeus_osa
+- primitivewaste
+- skaiware
+
+Urho3D is greatly inspired by OGRE (http://www.ogre3d.org/) and Horde3D (http://www.horde3d.org/). Additional inspiration & research used:
+
+- Rectangle packing by Jukka Jyl&auml;nki (clb) (http://clb.demon.fi/projects/rectangle-bin-packing/)
+- Tangent generation from Terathon (http://www.terathon.com/code/tangent.html)
+- Fast, Minimum Storage Ray/Triangle Intersection by M&ouml;ller & Trumbore (http://www.graphics.cornell.edu/pubs/1997/MT97.pdf)
+- Linear-Speed Vertex Cache Optimisation by Tom Forsyth (http://home.comcast.net/~tom_forsyth/papers/fast_vert_cache_opt.html)
+- Software rasterization of triangles based on Chris Hecker's Perspective %Texture Mapping series in the Game Developer magazine (http://chrishecker.com/Miscellaneous_Technical_Articles)
+- Networked Physics by Glenn Fiedler (http://gafferongames.com/game-physics/networked-physics/)
+- Euler Angle Formulas by David Eberly (http://www.geometrictools.com/Documentation/EulerAngles.pdf)
+- Red Black Trees by Julienne Walker (http://eternallyconfuzzled.com/tuts/datastructures/jsw_tut_rbtree.aspx)
+- Comparison of several sorting algorithms by Juha Nieminen (http://warp.povusers.org/SortComparison/)
+- NVIDIA FXAA II for Consoles by Timothy Lottes (http://timothylottes.blogspot.com/2011/04/nvidia-fxaa-ii-for-console.html)
+
+Urho3D uses the following third-party libraries:
+
+- AngelScript 2.27.0 WIP (http://www.angelcode.com/angelscript/)
+- Bullet 2.81 (http://www.bulletphysics.org/)
+- FreeType 2.3.12 (http://www.freetype.org/)
+- GLEW 1.9.0 (http://glew.sourceforge.net/)
+- jo_jpeg 1.52 (http://www.jonolick.com/uploads/7/9/2/1/7921194/jo_jpeg.cpp)
+- kNet (https://github.com/juj/kNet)
+- libcpuid 0.2.0 (http://libcpuid.sourceforge.net/)
+- Lua 5.1 (http://www.lua.org)
+- MojoShader (http://icculus.org/mojoshader/)
+- Open Asset Import Library (http://assimp.sourceforge.net/)
+- pugixml 1.0 (http://pugixml.org/)
+- Recast/Detour (http://code.google.com/p/recastnavigation/)
+- SDL 2.0 (http://www.libsdl.org/)
+- StanHull (http://codesuppository.blogspot.com/2006/03/john-ratcliffs-code-suppository-blog.html)
+- stb_image 1.29 (http://nothings.org/)
+- stb_vorbis 0.99996 (http://nothings.org/)
+- tolua++ 1.0.93 (http://www.codenix.com/~tolua)
+
+DXT / ETC1 / PVRTC decompression code based on the Squish library and the Oolong %Engine.
+
+Jack and mushroom models from the realXtend project. (http://www.realxtend.org)
+
+Ninja model and terrain / smoke / flare / status bar textures from OGRE.
+
+%Skybox cubemap from http://www.codemonsters.de.
+
+BlueHighway font from Larabie Fonts.
+
+Anonymous Pro font by Mark Simonson.
+
+NinjaSnowWar sounds by Veli-Pekka T&auml;til&auml;.
+
+
+\page License License
+
+Copyright (c) 2008-2013 the Urho3D project.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+\page History History
+
+V1.23
+
+- %UI layout editing in the editor.
+- Undo/redo in the editor.
+- Recast/Detour library integration for navigation mesh generation and pathfinding.
+- Open Asset Import Library update, enables FBX file support.
+- "Is Enabled" attribute in scene nodes and components for an uniform mechanism to temporarily disable unneeded audiovisual, physics or logic objects.
+- %Script object public variables editing and serialization.
+- New components: %Text3D and %Sprite.
+- %UI library functionality improvements.
+- sRGB texture and framebuffer support.
+- Switched to GLEW library for OpenGL extension handling.
+- Vegetation and lightmapping example shaders.
+- %Engine configuration through a parameter map.
+- Lots of refactoring, code cleanup and bugfixes.'
+
+V1.22
+
+- Configurable render path replaces hardcoded forward/prepass/deferred modes. Render path system also used for postprocessing now.
+- Threaded task priorities; long-running tasks (more than one frame) can coexist with the time-critical tasks.
+- Possibility to use also RGB normal maps.
+- %CustomGeometry component, which allows geometry to be defined similarly to OpenGL immediate mode.
+- Elapsed time shader parameter for material animation.
+- Cubic environment mapping example shaders.
+- Separate physics collision start & end events.
+- Visual Studio 2012, Eclipse & Xcode build support.
+- Many bugfixes, including iOS 6 orientation & shadow mapping bugfixes, and skinning on some Android devices.
+
+V1.21
+
+- Bugfixes and code cleanup.
+- External window support (experimental.)
+- %UI elements refactored to use attributes for serialization.
+- %Animation state editing and animation trigger events.
+- %Scene update time scale can be modified.
+- Improved the delayed method call system.
+
+V1.2
+
+- Android and iOS support.
+- %Decal rendering.
+- %Terrain rendering.
+- Joystick input support.
+- Use SDL library for windowing and input on all platforms.
+- KTX and PVR image loading (for ETC1 & PVRTC compressed textures.)
+- Removed need for shader preprocessing; reorganized shaders to be more friendly to base custom shaders on.
+- Inbuilt geometry shapes in the editor.
+
+V1.16
+
+- Switched to Bullet physics library.
+- More physics constraint types.
+- Rendering and networking performance optimizations.
+- Use Squish library to implement software DXT decompression when not supported in hardware.
+
+V1.15
+
+- New deferred rendering pipeline.
+- Unicode support.
+- Live resource reloading in the editor (Windows only so far.)
+- More accurate frame timing.
+- Bugfixes to physics jittering and FBO performance issue on Linux.
+
+V1.14
+
+- %Object (partial scene) load/save.
+- Post-processing.
+- Switched to pugixml library, scene load/save optimizations.
+- Bugfixes to rendertexture views and component attributes.
+
+V1.13
+
+- Task-based multithreading.
+- Vertex lighting option.
+- Forward and light pre-pass rendering pipelines.
+
+V1.12
+
+- Manipulator gizmo and multi-editing in the editor.
+- Switched to forward rendering exclusively, which is optimized to do more work in the vertex shader.
+- %Zone system refactoring. Objects check the zone they belong to for per-zone light masking, ambient light and fog settings.
+- Scripting API fixes and improvements.
+
+V1.11
+
+- Bugfixes and performance optimizations.
+- Added GraphicsTest example from V1.0 (now called TestSceneOld.)
+- Added fallback mode, which is used if multiple render targets or hardware shadow maps are not available.
+
+V1.1
+
+- %Object and scene model refactoring.
+- Automatic serialization of scene objects via attributes.
+- Added OpenGL and cross-platform support.
+- Switched to kNet library for networking.
+
+V1.0
+
+- Original release.
+
+*/
+
+}

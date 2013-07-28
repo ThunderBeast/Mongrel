@@ -1,0 +1,9 @@
+$#define TOLUA_RELEASE
+
+$pfile "Network/Connection.pkg"
+$pfile "Network/Controls.pkg"
+$pfile "Network/Network.pkg"
+$pfile "Network/NetworkPriority.pkg"
+
+$using namespace Urho3D;
+$#pragma warning(disable:4800)

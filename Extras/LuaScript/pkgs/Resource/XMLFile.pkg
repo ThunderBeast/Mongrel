@@ -1,0 +1,7 @@
+$#include "XMLFile.h"
+
+class XMLFile : public Resource
+{
+    XMLElement GetRoot(const String& name = String::EMPTY);
+    XMLElement GetRoot(const char* name);
+};

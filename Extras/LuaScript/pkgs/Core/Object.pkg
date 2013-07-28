@@ -1,0 +1,46 @@
+$#include "Object.h"
+
+class Object : public RefCounted
+{
+    virtual ShortStringHash GetType() const;
+    
+    // virtual const String& GetTypeName() const;
+    tolua_outside const char* ObjectGetTypeName @ GetTypeName() const;
+    
+    const String& GetCategory() const;
+    tolua_outside const char* ObjectGetCategory @ GetCategory() const;
+    
+    // void SendEvent(StringHash eventType);
+    tolua_outside void ObjectSendEvent @ SendEvent(const char* eventName);
+    
+    // void SendEvent(StringHash eventType, VariantMap& eventData);
+    tolua_outside void ObjectSendEvent @ SendEvent(const char* eventName, VariantMap& eventData);
+    
+    tolua_readonly tolua_property__get_set ShortStringHash type;
+    tolua_readonly tolua_property__get_set String& typeName;
+    tolua_readonly tolua_property__get_set String& category;
+};
+
+${
+
+static const char* ObjectGetTypeName(const Object* object)
+{
+    return object->GetTypeName().CString();
+}
+
+static const char* ObjectGetCategory(const Object* object)
+{
+    return object->GetCategory().CString();
+}
+
+static void ObjectSendEvent(Object* object, const char* eventName)
+{
+    object->SendEvent(StringHash(eventName));
+}
+
+static void ObjectSendEvent(Object* object, const char* eventName, VariantMap& eventData)
+{
+    object->SendEvent(StringHash(eventName), eventData);
+}
+
+$}
