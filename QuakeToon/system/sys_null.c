@@ -94,40 +94,15 @@ char *Sys_GetClipboardData(void)
     return NULL;
 }
 
-
-void *Hunk_Begin(int maxsize)
-{
-    return NULL;
-}
-
-
-void *Hunk_Alloc(int size)
-{
-    return NULL;
-}
-
-
-void Hunk_Free(void *buf)
-{
-}
-
-
-int Hunk_End(void)
-{
-    return 0;
-}
-
-
 int Sys_Milliseconds(void)
 {
     return 0;
 }
 
-
 void Sys_Mkdir(char *path)
 {
+    
 }
-
 
 char *Sys_FindFirst(char *path, unsigned musthave, unsigned canthave)
 {
