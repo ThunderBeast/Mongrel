@@ -211,7 +211,7 @@ void SVCmd_AddIP_f(void)
 void SVCmd_RemoveIP_f(void)
 {
     ipfilter_t f;
-    int i, j;
+    int        i, j;
 
     if (gi.argc() < 3)
     {
@@ -249,7 +249,7 @@ void SVCmd_RemoveIP_f(void)
  */
 void SVCmd_ListIP_f(void)
 {
-    int i;
+    int  i;
     byte b[4];
 
     gi.cprintf(NULL, PRINT_HIGH, "Filter list:\n");
@@ -268,10 +268,10 @@ void SVCmd_ListIP_f(void)
  */
 void SVCmd_WriteIP_f(void)
 {
-    FILE *f;
-    char name[MAX_OSPATH];
-    byte b[4];
-    int i;
+    FILE   *f;
+    char   name[MAX_OSPATH];
+    byte   b[4];
+    int    i;
     cvar_t *game;
 
     game = gi.cvar("game", "", 0);

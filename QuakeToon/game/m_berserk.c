@@ -130,6 +130,7 @@ void berserk_walk(edict_t *self)
     self->monsterinfo.currentmove = &berserk_move_walk;
 }
 
+
 mframe_t berserk_frames_run1 [] =
 {
     ai_run, 21, NULL,

@@ -94,15 +94,17 @@ char *Sys_GetClipboardData(void)
     return NULL;
 }
 
+
 int Sys_Milliseconds(void)
 {
     return 0;
 }
 
+
 void Sys_Mkdir(char *path)
 {
-    
 }
+
 
 char *Sys_FindFirst(char *path, unsigned musthave, unsigned canthave)
 {
@@ -129,13 +131,13 @@ void Sys_Init(void)
 //=============================================================================
 
 /*
-void main(int argc, char **argv)
-{
-    Qcommon_Init(argc, argv);
-
-    while (1)
-    {
-        Qcommon_Frame(0.1);
-    }
-}
-*/
+ * void main(int argc, char **argv)
+ * {
+ *  Qcommon_Init(argc, argv);
+ *
+ *  while (1)
+ *  {
+ *      Qcommon_Frame(0.1);
+ *  }
+ * }
+ */

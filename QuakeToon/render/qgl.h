@@ -482,5 +482,4 @@ void Fake_glColorTableEXT(GLenum target, GLenum internalformat,
 
 //QuakeToon
 //extern int GL_TEXTURE0, GL_TEXTURE1;
-
 #endif

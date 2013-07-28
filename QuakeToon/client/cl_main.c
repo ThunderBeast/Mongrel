@@ -1732,8 +1732,8 @@ void CL_WriteConfiguration(void)
 
 typedef struct
 {
-    char *name;
-    char *value;
+    char   *name;
+    char   *value;
     cvar_t *var;
 } cheatvar_t;
 
@@ -1757,7 +1757,7 @@ int numcheatvars;
 
 void CL_FixCvarCheats(void)
 {
-    int i;
+    int        i;
     cheatvar_t *var;
 
     if (!strcmp(cl.configstrings[CS_MAXCLIENTS], "1") ||

@@ -22,7 +22,6 @@
 // satisfy linker
 refexport_t GetRefAPI(refimport_t rimp)
 {
-
 }
 
 
