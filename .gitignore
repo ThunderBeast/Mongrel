@@ -2,4 +2,5 @@ build/*
 Bin/Urho3D
 Bin/Urho3D.log
 Bin/QuakeToon
+Bin/Q2Convert
 Bin/baseq2
