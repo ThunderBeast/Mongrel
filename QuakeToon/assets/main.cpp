@@ -3,12 +3,12 @@
 extern "C"
 {
 
-void Swap_Init(void);
+void Qcommon_Init();
 
 }
 
 int main(int argc, char **argv)
 {
-	Swap_Init();
+	Qcommon_Init();
 	return 0;
 }

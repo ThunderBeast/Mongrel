@@ -118,7 +118,7 @@ typedef struct pack_s
 
 char   fs_gamedir[MAX_OSPATH];
 
-const char *fs_basedir = "baseq2";
+const char *fs_basedir = ".";
 const char* fs_cddir = "";
 cvar_t *fs_gamedirvar;
 
@@ -285,7 +285,7 @@ int FS_FOpenFile(char *filename, FILE **file)
     {
         if (!strncmp(filename, link->from, link->fromlength))
         {
-            sprintf(netpath, sizeof(netpath), "%s%s", link->to, filename + link->fromlength);
+            snprintf(netpath, sizeof(netpath), "%s%s", link->to, filename + link->fromlength);
             *file = fopen(netpath, "rb");
             if (*file)
             {
@@ -327,7 +327,7 @@ int FS_FOpenFile(char *filename, FILE **file)
         {
             // check a file in the directory tree
 
-            sprintf(netpath, sizeof(netpath), "%s/%s", search->filename, filename);
+            snprintf(netpath, sizeof(netpath), "%s/%s", search->filename, filename);
 
             *file = fopen(netpath, "rb");
             if (!*file)
@@ -364,7 +364,7 @@ int FS_FOpenFile(char *filename, FILE **file)
     // get config from directory, everything else from pak
     if (!strcmp(filename, "config.cfg") || !strncmp(filename, "players/", 8))
     {
-        sprintf(netpath, sizeof(netpath), "%s/%s", FS_Gamedir(), filename);
+        snprintf(netpath, sizeof(netpath), "%s/%s", FS_Gamedir(), filename);
 
         *file = fopen(netpath, "rb");
         if (!*file)
@@ -623,7 +623,7 @@ void FS_AddGameDirectory(char *dir)
     //
     for (i = 0; i < 10; i++)
     {
-        sprintf(pakfile, sizeof(pakfile), "%s/pak%i.pak", dir, i);
+        snprintf(pakfile, sizeof(pakfile), "%s/pak%i.pak", dir, i);
         pak = FS_LoadPackFile(pakfile);
         if (!pak)
         {
@@ -670,11 +670,11 @@ void FS_ExecAutoexec(void)
     dir = "baseq2";//Cvar_VariableString("gamedir");
     if (*dir)
     {
-        sprintf(name, sizeof(name), "%s/%s/autoexec.cfg", fs_basedir, dir);
+        snprintf(name, sizeof(name), "%s/%s/autoexec.cfg", fs_basedir, dir);
     }
     else
     {
-        sprintf(name, sizeof(name), "%s/%s/autoexec.cfg", fs_basedir, BASEDIRNAME);
+        snprintf(name, sizeof(name), "%s/%s/autoexec.cfg", fs_basedir, BASEDIRNAME);
     }
     if (Sys_FindFirst(name, 0, SFF_SUBDIR | SFF_HIDDEN | SFF_SYSTEM))
     {
@@ -726,7 +726,7 @@ void FS_SetGamedir(char *dir)
         
     }
 
-    sprintf(fs_gamedir, sizeof(fs_gamedir), "%s/%s", fs_basedir, dir);
+    snprintf(fs_gamedir, sizeof(fs_gamedir), "%s/%s", fs_basedir, dir);
 
     if (!strcmp(dir, BASEDIRNAME) || (*dir == 0))
     {
@@ -735,7 +735,7 @@ void FS_SetGamedir(char *dir)
     }
     else
     {
-        FS_AddGameDirectory(va("%s/%s", fs_basedir, dir));
+        //FS_AddGameDirectory(va("%s/%s", fs_basedir, dir));
     }
 }
 
@@ -1187,6 +1187,15 @@ void Swap_Init(void)
     }
 }
 
+
+void Qcommon_Init()
+{
+    z_chain.next = z_chain.prev = &z_chain;
+
+    Swap_Init();
+    FS_InitFilesystem();
+    Sys_Init();
+}
 
 
 
