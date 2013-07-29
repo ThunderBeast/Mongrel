@@ -39,7 +39,7 @@ int     mod_numknown;
 // the inline * models from the current map are kept seperate
 model_t mod_inline[MAX_MOD_KNOWN];
 
-int registration_sequence;
+int registration_sequence = 1;
 
 /*
  * ===============
@@ -325,6 +325,8 @@ void Mod_LoadLighting(lump_t *l)
     }
     loadmodel->lightdata = Hunk_Alloc(l->filelen);
     memcpy(loadmodel->lightdata, mod_base + l->fileofs, l->filelen);
+
+    printf("loaded %i bytes of lightdata\n", l->filelen);
 }
 
 
@@ -351,6 +353,8 @@ void Mod_LoadVisibility(lump_t *l)
         loadmodel->vis->bitofs[i][0] = LittleLong(loadmodel->vis->bitofs[i][0]);
         loadmodel->vis->bitofs[i][1] = LittleLong(loadmodel->vis->bitofs[i][1]);
     }
+
+    printf("loaded %i bytes of visdata\n", l->filelen);
 }
 
 
@@ -382,6 +386,8 @@ void Mod_LoadVertexes(lump_t *l)
         out->position[1] = LittleFloat(in->point[1]);
         out->position[2] = LittleFloat(in->point[2]);
     }
+
+    printf("loaded %i vertices\n", count);
 }
 
 
@@ -439,6 +445,9 @@ void Mod_LoadSubmodels(lump_t *l)
         out->firstface = LittleLong(in->firstface);
         out->numfaces  = LittleLong(in->numfaces);
     }
+
+    printf("loaded %i submodels\n", count);
+
 }
 
 
@@ -469,6 +478,8 @@ void Mod_LoadEdges(lump_t *l)
         out->v[0] = (unsigned short)LittleShort(in->v[0]);
         out->v[1] = (unsigned short)LittleShort(in->v[1]);
     }
+
+    printf("loaded %i edges\n", count);
 }
 
 
@@ -514,17 +525,19 @@ void Mod_LoadTexinfo(lump_t *l)
             out->next = NULL;
         }
 
-        sprintf(name, sizeof(name), "textures/%s.wal", in->texture);
+        snprintf(name, sizeof(name), "textures/%s.wal", in->texture);
 
         //Q2Convert
         out->image = NULL;//GL_FindImage(name, it_wall);
 
         if (!out->image)
         {
-            printf("Couldn't load %s\n", name);
+            //printf("Couldn't load %s\n", name);
             out->image = r_notexture;
         }
     }
+
+    printf("loaded %i texinfo\n", count);
 
     // count animation frames
     for (i = 0; i < count; i++)
@@ -706,6 +719,8 @@ void Mod_LoadFaces(lump_t *l)
         }
     }
 
+    printf("loaded %i faces\n", count);
+
     //Q2Convert
     //GL_EndBuildingLightmaps();
 }
@@ -780,6 +795,8 @@ void Mod_LoadNodes(lump_t *l)
     }
 
     Mod_SetParent(loadmodel->nodes, NULL);      // sets nodes and leafs
+
+    printf("loaded %i nodes\n", count);
 }
 
 
@@ -825,6 +842,8 @@ void Mod_LoadLeafs(lump_t *l)
                                 LittleShort(in->firstleafface);
         out->nummarksurfaces = LittleShort(in->numleaffaces);
     }
+
+    printf("Loaded %i leafs\n", count);
 }
 
 
@@ -859,6 +878,8 @@ void Mod_LoadMarksurfaces(lump_t *l)
         }
         out[i] = loadmodel->surfaces + j;
     }
+
+    printf("Loaded %i mark surfaces\n", count);
 }
 
 
@@ -893,6 +914,8 @@ void Mod_LoadSurfedges(lump_t *l)
     {
         out[i] = LittleLong(in[i]);
     }
+
+    printf("Loaded %i surf edges\n", count);
 }
 
 
@@ -936,6 +959,8 @@ void Mod_LoadPlanes(lump_t *l)
         out->type     = LittleLong(in->type);
         out->signbits = bits;
     }
+
+    printf("Loaded %i planes\n", count);
 }
 
 
@@ -1170,6 +1195,8 @@ void Mod_LoadAliasModel(model_t *mod, void *buffer)
     mod->maxs[0] = 32;
     mod->maxs[1] = 32;
     mod->maxs[2] = 32;
+
+    printf("loaded alias model\n");
 }
 
 
@@ -1224,6 +1251,8 @@ void Mod_LoadSpriteModel(model_t *mod, void *buffer)
     }
 
     mod->type = mod_sprite;
+
+    printf("loaded sprite model\n");
 }
 
 
@@ -1244,7 +1273,7 @@ void R_BeginRegistration(char *model)
     registration_sequence++;
     r_oldviewcluster = -1;              // force markleafs
 
-    sprintf(fullname, sizeof(fullname), "maps/%s.bsp", model);
+    snprintf(fullname, sizeof(fullname), "maps/%s.bsp", model);
 
     // explicitly free the old map if different
     // this guarantees that mod_known[0] is the world map
