@@ -27,3 +27,5 @@ endif ()
 
 setup_executable ()
 set (CMAKE_EXE_LINKER_FLAGS "-framework AudioUnit -framework Carbon -framework Cocoa -framework CoreAudio -framework ForceFeedback -framework IOKit -framework OpenGL -framework CoreServices")
+
+add_subdirectory (assets)
