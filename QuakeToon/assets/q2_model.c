@@ -646,9 +646,7 @@ void Mod_LoadFaces(lump_t *l)
 
     currentmodel = loadmodel;
 
-
-    //Q2Convert
-    //GL_BeginBuildingLightmaps(loadmodel);
+    GL_BeginBuildingLightmaps(loadmodel);
 
     for (surfnum = 0; surfnum < count; surfnum++, in++, out++)
     {
@@ -693,6 +691,8 @@ void Mod_LoadFaces(lump_t *l)
 
         // set the drawing flags
 
+        // Q2Convert
+        /*
         if (out->texinfo->flags & SURF_WARP)
         {
             out->flags |= SURF_DRAWTURB;
@@ -701,28 +701,26 @@ void Mod_LoadFaces(lump_t *l)
                 out->extents[i]     = 16384;
                 out->texturemins[i] = -8192;
             }
-            //Q2Convert
-            //GL_SubdivideSurface(out);                   // cut up polygon for warps
+
+            GL_SubdivideSurface(out);                   // cut up polygon for warps
         }
+        */
 
         // create lightmaps and polygons
         if (!(out->texinfo->flags & (SURF_SKY | SURF_TRANS33 | SURF_TRANS66 | SURF_WARP)))
-        {
-        	//Q2Convert
-            //GL_CreateSurfaceLightmap(out);
+        {        	
+            GL_CreateSurfaceLightmap(out);
         }
 
         if (!(out->texinfo->flags & SURF_WARP))
-        {
-        	//Q2Convert
-            //GL_BuildPolygonFromSurface(out);
+        {        	
+            GL_BuildPolygonFromSurface(out);
         }
     }
 
     printf("loaded %i faces\n", count);
-
-    //Q2Convert
-    //GL_EndBuildingLightmaps();
+    
+    GL_EndBuildingLightmaps();
 }
 
 
