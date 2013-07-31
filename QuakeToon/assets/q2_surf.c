@@ -3,11 +3,10 @@
 #include "../render/gl_local.h"
 
 
-#define DYNAMIC_LIGHT_WIDTH     128
-#define DYNAMIC_LIGHT_HEIGHT    128
-
 #define LIGHTMAP_BYTES          4
 
+
+// can raise these
 #define BLOCK_WIDTH             128
 #define BLOCK_HEIGHT            128
 
@@ -19,6 +18,8 @@ int c_visible_textures;
 #define GL_LIGHTMAP_FORMAT    GL_RGBA
 
 static float s_blocklights[34 * 34 * 3];
+
+static byte all_lightmaps[MAX_LIGHTMAPS][4 * BLOCK_WIDTH * BLOCK_HEIGHT];
 
 typedef struct
 {
@@ -35,6 +36,22 @@ typedef struct
 } gllightmapstate_t;
 
 static gllightmapstate_t gl_lms;
+
+void DumpLightmapsToPng()
+{
+    int i;
+    char filename[1024];
+
+    for (i = 0; i < gl_lms.current_lightmap_texture; i++)
+    {
+        sprintf(filename, "LIGHTMAP%i.png", i);
+        stbi_write_png(filename, BLOCK_WIDTH, BLOCK_HEIGHT, 4, &all_lightmaps[i], 4 * BLOCK_WIDTH);
+    }
+
+    sprintf(filename, "LIGHTMAP%i.png", gl_lms.current_lightmap_texture);
+    stbi_write_png(filename, BLOCK_WIDTH, BLOCK_HEIGHT, 4, &gl_lms.lightmap_buffer, 4 * BLOCK_WIDTH);
+
+}
 
 
 // returns a texture number and the position inside it
@@ -429,11 +446,7 @@ void GL_CreateSurfaceLightmap(msurface_t *surf)
     	// Q2Convert
         //LM_UploadBlock(false);
 
-        char filename[1024];
-        
-        sprintf(filename, "LIGHTMAP%i.png", gl_lms.current_lightmap_texture);
-        //extern int stbi_write_png(char const *filename, int w, int h, int comp, const void *data, int stride_in_bytes);
-        stbi_write_png(filename, BLOCK_WIDTH, BLOCK_HEIGHT, 4, &gl_lms.lightmap_buffer, 4 * BLOCK_WIDTH);
+        memcpy(all_lightmaps[gl_lms.current_lightmap_texture], gl_lms.lightmap_buffer, sizeof(gl_lms.lightmap_buffer));
 
         if (++gl_lms.current_lightmap_texture == MAX_LIGHTMAPS)
         {
