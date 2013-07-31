@@ -1,4 +1,7 @@
+
+#include "stb_image_write.h"
 #include "../render/gl_local.h"
+
 
 #define DYNAMIC_LIGHT_WIDTH     128
 #define DYNAMIC_LIGHT_HEIGHT    128
@@ -27,7 +30,7 @@ typedef struct
 
     // the lightmap texture data needs to be kept in
     // main memory so texsubimage can update properly
-    byte       lightmap_buffer[4 * BLOCK_WIDTH * BLOCK_HEIGHT];
+    byte lightmap_buffer[4 * BLOCK_WIDTH * BLOCK_HEIGHT];
 
 } gllightmapstate_t;
 
@@ -231,7 +234,7 @@ store:
 
     //monolightmap = gl_monolightmap->string[0];
 
-    if (false)//monolightmap == '0')
+    if (true)//monolightmap == '0')
     {
         for (i = 0; i < tmax; i++, dest += stride)
         {
@@ -425,6 +428,18 @@ void GL_CreateSurfaceLightmap(msurface_t *surf)
 
     	// Q2Convert
         //LM_UploadBlock(false);
+
+        char filename[1024];
+        
+        sprintf(filename, "LIGHTMAP%i.png", gl_lms.current_lightmap_texture);
+        //extern int stbi_write_png(char const *filename, int w, int h, int comp, const void *data, int stride_in_bytes);
+        stbi_write_png(filename, BLOCK_WIDTH, BLOCK_HEIGHT, 4, &gl_lms.lightmap_buffer, 4 * BLOCK_WIDTH);
+
+        if (++gl_lms.current_lightmap_texture == MAX_LIGHTMAPS)
+        {
+            Sys_Error("MAX_LIGHTMAPS exceeded\n");
+        }
+
         LM_InitBlock();
         if (!LM_AllocBlock(smax, tmax, &surf->light_s, &surf->light_t))
         {

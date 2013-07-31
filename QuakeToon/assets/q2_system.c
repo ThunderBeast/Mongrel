@@ -48,7 +48,7 @@ void Sys_Error(char *error, ...)
 
 int Sys_Milliseconds(void)
 {
-    return (int) SDL_GetTicks();
+    return (int) 0;
 }
 
 

@@ -9,5 +9,7 @@ file ( GLOB ASSET_FILES *.c *.cpp)
 
 set (SOURCE_FILES ${ASSET_FILES} )
 
+set (LIBS ../../ThirdParty/STB)
+
 setup_executable ()
 
